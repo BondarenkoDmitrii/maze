@@ -41,7 +41,7 @@ public class Maze {
 
     public void move(int i, int j) {
         if (this.mazeArray[i][j].getEnd()){
-            WorkWithFile.writer("C:/Users/bonda/Downloads/Info.txt",
+            WorkWithFile.writer("src/main/files/Info.txt",
                                 "Шар докатился до конца лабиринта за " + this.move_count + " ходов, при старте с " + this.stock_time + " хода");
             return;
         }
@@ -148,13 +148,13 @@ public class Maze {
 
 //        если шару некуда катиться программа останавливается
         if (next.equals(this.mazeArray[i][j])){
-            WorkWithFile.writer("C:/Users/bonda/Downloads/Info.txt",
+            WorkWithFile.writer("src/main/files/Info.txt",
                                 "Шару некуда катиться, программа остановлена.");
             return;
         }
 
         this.move_count++;
-        WorkWithFile.writer("C:/Users/bonda/Downloads/Info.txt",
+        WorkWithFile.writer("src/main/files/Info.txt",
                     "Шаг номер " + this.move_count +
                             " позиция " + "(" + next.getPosI() + ";" + next.getPosJ() + ")");
         move(next.getPosI(), next.getPosJ());

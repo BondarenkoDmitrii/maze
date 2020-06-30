@@ -37,7 +37,7 @@ public class WorkWithFile {
 
             maze.setCellArray(posI, posJ, cell);
         }
-        writer("C:/Users/bonda/Downloads/Info.txt", "Файл успешно прочитан, данные записаны.");
+        writer("src/main/files/Info.txt", "Файл успешно прочитан, данные записаны.");
         return maze;
     }
 

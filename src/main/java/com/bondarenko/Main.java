@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
-        Scanner sc = new Scanner(new File("C:/Users/bonda/Downloads/DataMaze.txt"));
+        Scanner sc = new Scanner(new File("src/main/files/DataMaze.txt"));
         Integer task = Integer.parseInt(sc.nextLine());
 
         switch (task) {
@@ -19,7 +19,7 @@ public class Main {
 //                break;
 
             default:
-                WorkWithFile.writer("C:/Users/bonda/Downloads/Info.txt", "Неверный номер задания.");
+                WorkWithFile.writer("src/main/files/Info.txt", "Неверный номер задания.");
                 break;
         }
 
