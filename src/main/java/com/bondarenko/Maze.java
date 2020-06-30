@@ -5,10 +5,17 @@ import java.util.ArrayList;
 public class Maze {
     private Cell [][] mazeArray;
     private int move_count;
+    private int stock_time;
 
     public Maze() {
         this.mazeArray = new Cell[8][8];
         this.move_count = 0;
+    }
+
+    public Maze(int move_count) {
+        this.mazeArray = new Cell[8][8];
+        this.move_count = 0;
+        this.stock_time = move_count;
     }
 
     public void mazeWalkthrough() {
@@ -35,7 +42,7 @@ public class Maze {
     public void move(int i, int j) {
         if (this.mazeArray[i][j].getEnd()){
             WorkWithFile.writer("C:/Users/bonda/Downloads/Info.txt",
-                                "Шар докатился до конца лабиринта.");
+                                "Шар докатился до конца лабиринта за " + this.move_count + " ходов, при старте с " + this.stock_time + " хода");
             return;
         }
 
@@ -180,5 +187,13 @@ public class Maze {
 
     public void setCellArray(int i, int j, Cell cell) {
         this.mazeArray[i][j] = cell;
+    }
+
+    public int getStock_time() {
+        return stock_time;
+    }
+
+    public void setStock_time(int stock_time) {
+        this.stock_time = stock_time;
     }
 }

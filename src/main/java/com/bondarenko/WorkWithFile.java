@@ -7,8 +7,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class WorkWithFile {
-    public static Maze parser() throws FileNotFoundException {
-        Scanner sc = new Scanner(new File("C:/Users/bonda/Downloads/DataMaze.txt"));
+    public static Maze parser(Scanner sc) throws FileNotFoundException {
         String [] splitter;
         Boolean wall;
         Integer opening_period;
@@ -19,7 +18,9 @@ public class WorkWithFile {
         Integer posI;
         Integer posJ;
 
-        Maze maze = new Maze();
+        Integer time = Integer.parseInt(sc.nextLine());
+
+        Maze maze = new Maze(time);
 
         while(sc.hasNext()) {
             splitter = sc.nextLine().split(";");
