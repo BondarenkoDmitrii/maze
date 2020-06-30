@@ -28,13 +28,16 @@ public class Maze {
         if (coordinate1 == -1)
             return;
 
-//        запускаем рекурсивную функцию высчитывания следующего хода
+//        запускаем рекурсивную функцию для прохода лабиринта
         move(coordinate1, coordinate2);
     }
 
     public void move(int i, int j) {
-        if (this.mazeArray[i][j].getEnd())
+        if (this.mazeArray[i][j].getEnd()){
+            WorkWithFile.writer("C:/Users/bonda/Downloads/Info.txt",
+                                "Шар докатился до конца лабиринта.");
             return;
+        }
 
         ArrayList<Cell> arrayList = new ArrayList<Cell>();
 
@@ -89,19 +92,70 @@ public class Maze {
             arrayList.add(this.mazeArray[i - 1][j]);
         }
 
+        ArrayList<Cell> arrayEquals = new ArrayList<Cell>();
         Cell next = this.mazeArray[i][j];
         for (Cell cell: arrayList) {
-            if (cell.getFloor_height() < next.getFloor_height() && !cell.getWall()) {
-                next = cell;
-                return;
+            if (cell.getFloor_height() < next.getFloor_height()) {
+                if (cell.getWall()) {
+                    if (cell.getOpening_period() == 0) {
+//                        алгоритм для закрывающейся перегородки
+                        if (this.move_count % cell.getClosing_period() != 0 && this.move_count != 0) {
+                            next = cell;
+                        }
+                    }
+                    else {
+//                        алгоритм для открывающейся перегородки
+                        if (this.move_count % cell.getOpening_period() == 0 && this.move_count != 0) {
+                            next = cell;
+                        }
+                    }
+                }
+                else {
+                    next = cell;
+                }
+            }
+            if (cell.getFloor_height() == next.getFloor_height()) {
+                if (cell.getWall()) {
+                    if (cell.getOpening_period() == 0) {
+//                        алгоритм для закрывающейся перегородки
+                        if (this.move_count % cell.getClosing_period() != 0 && this.move_count != 0) {
+                            arrayEquals.add(cell);
+                        }
+                    }
+                    else {
+//                        алгоритм для открывающейся перегородки
+                        if (this.move_count % cell.getOpening_period() == 0 && this.move_count != 0) {
+                            arrayEquals.add(cell);
+                        }
+                    }
+                }
+                else {
+                    arrayEquals.add(cell);
+                }
             }
         }
 
-        if (next == this.mazeArray[i][j]){
+        if (next.equals(this.mazeArray[i][j]) && !arrayEquals.isEmpty()) {
+            next = arrayEquals.get(rnd(arrayEquals.size() - 1));
+        }
+
+//        если шару некуда катиться программа останавливается
+        if (next.equals(this.mazeArray[i][j])){
+            WorkWithFile.writer("C:/Users/bonda/Downloads/Info.txt",
+                                "Шару некуда катиться, программа остановлена.");
             return;
         }
 
+        this.move_count++;
+        WorkWithFile.writer("C:/Users/bonda/Downloads/Info.txt",
+                    "Шаг номер " + this.move_count +
+                            " позиция " + "(" + next.getPosI() + ";" + next.getPosJ() + ")");
         move(next.getPosI(), next.getPosJ());
+    }
+
+    public static int rnd(int max)
+    {
+        return (int) (Math.random() * ++max);
     }
 
     public Cell[][] getMazeArray() {
